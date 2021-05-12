@@ -2,7 +2,6 @@ package dao
 
 import (
 	"fmt"
-
 	"github.com/companieshouse/lfp-error-reporter/config"
 	"github.com/companieshouse/lfp-error-reporter/models"
 	"github.com/globalsign/mgo"
@@ -51,7 +50,6 @@ func (m *Mongo) GetLFPData(reconciliationMetaData *models.ReconciliationMetaData
 		return penaltiesData, fmt.Errorf("error connecting to MongoDB: %s", err)
 	}
 	defer mongoSession.Close()
-
 	err = mongoSession.DB(m.Config.Database).C(m.Config.LFPCollection).Find(bson.M{"data.created_at": bson.M{
 		"$gt": reconciliationMetaData.StartTime,
 		"$lt": reconciliationMetaData.EndTime,

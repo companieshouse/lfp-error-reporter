@@ -1,3 +1,4 @@
+// Package service contains the logic that retrieves the LFP data and constructs the CSV file
 package service
 
 import (
@@ -18,22 +19,22 @@ type Service interface {
 }
 
 // ServiceImpl provides a concrete implementation of the Service interface
-type ServiceImpl struct {
+type Impl struct {
 	Config *config.Config
 	DAO    dao.DAO
 }
 
 // New returns a new, concrete implementation of the Service interface
-func New(cfg *config.Config) *ServiceImpl {
+func New(cfg *config.Config) *Impl {
 
-	return &ServiceImpl{
+	return &Impl{
 		Config: cfg,
 		DAO:    dao.New(cfg),
 	}
 }
 
 // GetLFPCSV retrieves lfp data and constructs a CSV
-func (s *ServiceImpl) GetLFPCSV(reconciliationMetaData *models.ReconciliationMetaData) (models.CSV, error) {
+func (s *Impl) GetLFPCSV(reconciliationMetaData *models.ReconciliationMetaData) (models.CSV, error) {
 
 	var csv models.CSV
 

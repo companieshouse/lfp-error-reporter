@@ -23,4 +23,4 @@ SFTP_SERVER                                      | The SFTP server host name.   
 SFTP_PORT                                        | The port over which to connect to the SFTP server.                                                            | '22'
 SFTP_USERNAME                                    | The username of the SFTP server credentials.                                                                  | 
 SFTP_PASSWORD                                    | The password of the SFTP server credentials.                                                                  |
-SFTP_FILE_PATH                                   | The file path, relative to the root of the SFTP server, to which to upload CSV files.                         | 'uploadPath' (will result is CV's uploaded to directory: ~/uploadPath)
+SFTP_FILE_PATH                                   | The file path, relative to the root of the SFTP server, to which to upload CSV files.                         | 'uploadPath' (will result in CV's uploaded to directory: ~/uploadPath)

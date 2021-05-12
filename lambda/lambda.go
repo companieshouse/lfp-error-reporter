@@ -1,3 +1,4 @@
+// Package lambda contains the core lambda executable code
 package lambda
 
 import (
@@ -31,7 +32,6 @@ func New(cfg *config.Config) *Lambda {
 
 // Execute handles lambda execution
 func (lambda *Lambda) Execute(reconciliationMetaData *models.ReconciliationMetaData) error {
-
 	if reconciliationMetaData.ReconciliationDate == "" {
 
 		reconciliationDateTime := time.Now()

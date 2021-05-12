@@ -1,5 +1,7 @@
 bin     := lfp-error-reporter
-version := "unversioned"
+commit       := $(shell git rev-parse --short HEAD)
+tag          := $(shell git tag -l 'v*-rc*' --points-at HEAD)
+version := $(shell if [[ -n "$(tag)" ]]; then echo $(tag) | sed 's/^v//'; else echo $(commit); fi)
 
 lint_output  := lint.txt
 

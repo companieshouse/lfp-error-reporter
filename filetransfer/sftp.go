@@ -72,7 +72,10 @@ func (t *SFTP) UploadCSVFiles(csvs []models.CSV) error {
 			return fmt.Errorf("error writing CSV data: %s", err)
 		}
 
-		file.Close()
+		if err := file.Close(); err != nil {
+			return fmt.Errorf("failed to close file: %s", err)
+		}
+
 	}
 
 	return nil
