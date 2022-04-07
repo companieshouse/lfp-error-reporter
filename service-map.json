@@ -1,0 +1,17 @@
+{
+    "type": "Service",
+    "name": "lfp-error-reporter",
+    "description": "A lambda to report errors from the lfp service when communicating with e5. This service collates failed lfp payments from the payable resources collection and writes it to CSV's on an SFTP server.",
+    "owned_by": "Titans",
+    "git_repo": "https://github.com/companieshouse/lfp-error-reporter",        
+    "users":"internal",    
+    "code_analysis_link": "http://code-analysis.platform.aws.chdev.org:9000/dashboard?id=uk.gov.companieshouse%3Alfp-error-reporter#",    
+    "service_area": "Intelligence and Enforcement",
+    "service_component": "LFP",    
+    "language": "Java",
+    "integration_outgoing": [
+      "e5,INTEGRATES_WITH",
+      "payable_resources,GETS_DATA_FROM",
+      "chf-e5app-pp.internal.ch,ADDS_FILES_TO"
+    ]
+  }
