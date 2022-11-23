@@ -19,22 +19,22 @@ type Service interface {
 }
 
 // ServiceImpl provides a concrete implementation of the Service interface
-type Impl struct {
+type ServiceImpl struct {
 	Config *config.Config
 	DAO    dao.DAO
 }
 
 // New returns a new, concrete implementation of the Service interface
-func New(cfg *config.Config) *Impl {
+func New(cfg *config.Config) *ServiceImpl {
 
-	return &Impl{
+	return &ServiceImpl{
 		Config: cfg,
 		DAO:    dao.New(cfg),
 	}
 }
 
 // GetLFPCSV retrieves lfp data and constructs a CSV
-func (s *Impl) GetLFPCSV(reconciliationMetaData *models.ReconciliationMetaData) (models.CSV, error) {
+func (s *ServiceImpl) GetLFPCSV(reconciliationMetaData *models.ReconciliationMetaData) (models.CSV, error) {
 
 	var csv models.CSV
 
