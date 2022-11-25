@@ -1,0 +1,3 @@
+variable service {}
+
+variable environment {}
