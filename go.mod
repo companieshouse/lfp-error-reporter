@@ -10,7 +10,7 @@ require (
 	github.com/golang/mock v1.6.0
 	github.com/pkg/sftp v1.13.5
 	github.com/smartystreets/goconvey v1.7.2
-	golang.org/x/crypto v0.11.0
+	golang.org/x/crypto v0.7.0
 )
 
 require (
