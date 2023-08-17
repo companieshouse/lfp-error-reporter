@@ -20,7 +20,7 @@ type TransactionDao struct {
 
 // PayableResourceDao is the persisted resource for payable items
 type PayableResourceDao struct {
-	ID             int                    `bson:"_id"`
+	ID             string                 `bson:"_id"`
 	E5CommandError string                 `bson:"e5_command_error"`
 	CompanyNumber  string                 `bson:"company_number"`
 	Reference      string                 `bson:"reference"`
