@@ -1,3 +1,7 @@
+data "vault_generic_secret" "lambda_environment_variables" {
+  path = "applications/${var.aws_profile}/${var.environment}/${var.service}/lambda_environment_variables"
+}
+
 # ------------------------------------------------------------------------------
 # Lambdas
 # ------------------------------------------------------------------------------
@@ -17,8 +21,8 @@ resource "aws_lambda_function" "lfp_error_reporter" {
   }
   environment {
     variables = merge (
-      var.open_lambda_environment_variables,
-      { "SFTP_PORT"=22 }
+      data.vault_generic_secret.lambda_environment_variables.data,
+      var.open_lambda_environment_variables
     )
   }
 }
