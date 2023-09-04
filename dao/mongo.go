@@ -2,6 +2,9 @@ package dao
 
 import (
 	"fmt"
+	"strconv"
+
+	"github.com/companieshouse/chs.go/log"
 	"github.com/companieshouse/lfp-error-reporter/config"
 	"github.com/companieshouse/lfp-error-reporter/models"
 	"github.com/globalsign/mgo"
@@ -26,24 +29,37 @@ var session *mgo.Session
 // getMongoSession retrieves a fresh MongoDB session
 func getMongoSession(cfg *config.Config) (*mgo.Session, error) {
 
-	if session == nil {
+	dbNames, _ := session.DatabaseNames()
 
+	log.Info("MK: getMongoSession: len(session.DatabaseNames())) => " + strconv.Itoa(len(dbNames)))
+
+	if session == nil {
+		log.Info("MK: getMongoSession: establishing db connection...")
 		var err error
 		session, err = mgo.Dial(cfg.MongoDBURL)
 		if err != nil {
+			log.Info("MK: getMongoSession: error establishing db connection => " + err.Error())
 			return nil, err
 		}
 	}
-
+	log.Info("MK: getMongoSession: returning session copy...")
 	return session.Copy(), nil
 }
 
 // GetLFPData fetches lfp data
 func (m *Mongo) GetLFPData(reconciliationMetaData *models.ReconciliationMetaData) (models.PenaltyList, error) {
 
+	log.Info("MK: GetLFPData and fetching lfp data.")
+
 	var penalties []models.PayableResourceDao
 
 	var penaltiesData models.PenaltyList
+
+	log.Info("MK: GetLFPData: len(penalties) => " + strconv.Itoa(len(penalties)))
+	log.Info("MK: GetLFPData: penaltiesData.Penalties[0].CompanyNumber => " + penaltiesData.Penalties[0].CompanyNumber)
+	log.Info("MK: GetLFPData: penaltiesData.Penalties[0].E5CommandError => " + penaltiesData.Penalties[0].E5CommandError)
+	log.Info("MK: GetLFPData: penaltiesData.Penalties[0].Reference => " + penaltiesData.Penalties[0].Reference)
+	log.Info("MK: GetLFPData: penaltiesData.Penalties[0]..Data.Payment.Amount => " + penaltiesData.Penalties[0].Data.Payment.Amount)
 
 	mongoSession, err := getMongoSession(m.Config)
 	if err != nil {
