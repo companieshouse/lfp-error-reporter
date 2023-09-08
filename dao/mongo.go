@@ -29,11 +29,7 @@ var session *mgo.Session
 // getMongoSession retrieves a fresh MongoDB session
 func getMongoSession(cfg *config.Config) (*mgo.Session, error) {
 
-	dbNames, _ := session.DatabaseNames()
-
-	if dbNames != nil {
-		log.Info("MK: getMongoSession: len(session.DatabaseNames())) => " + strconv.Itoa(len(dbNames)))
-	}
+	log.Info("MK: getMongoSession getting mongo session.")
 
 	if session == nil {
 		log.Info("MK: getMongoSession: establishing db connection...")
@@ -42,6 +38,11 @@ func getMongoSession(cfg *config.Config) (*mgo.Session, error) {
 		if err != nil {
 			log.Info("MK: getMongoSession: error establishing db connection => " + err.Error())
 			return nil, err
+		}
+	} else {
+		dbNames, _ := session.DatabaseNames()
+		if dbNames != nil {
+			log.Info("MK: getMongoSession: len(session.DatabaseNames())) => " + strconv.Itoa(len(dbNames)))
 		}
 	}
 	log.Info("MK: getMongoSession: returning session copy...")
