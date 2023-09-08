@@ -31,7 +31,9 @@ func getMongoSession(cfg *config.Config) (*mgo.Session, error) {
 
 	dbNames, _ := session.DatabaseNames()
 
-	log.Info("MK: getMongoSession: len(session.DatabaseNames())) => " + strconv.Itoa(len(dbNames)))
+	if dbNames != nil {
+		log.Info("MK: getMongoSession: len(session.DatabaseNames())) => " + strconv.Itoa(len(dbNames)))
+	}
 
 	if session == nil {
 		log.Info("MK: getMongoSession: establishing db connection...")
