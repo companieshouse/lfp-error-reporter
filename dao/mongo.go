@@ -61,7 +61,7 @@ func (m *Mongo) GetLFPData(reconciliationMetaData *models.ReconciliationMetaData
 
 	mongoSession, err := getMongoSession(m.Config)
 	if err != nil {
-		log.Info("MK: error opening Mongo session => " + fmt.Errorf("error connecting to MongoDB: %s", err).Error())
+		log.Info("MK: error opening Mongo session")
 		return penaltiesData, fmt.Errorf("error connecting to MongoDB: %s", err)
 	}
 
@@ -72,7 +72,7 @@ func (m *Mongo) GetLFPData(reconciliationMetaData *models.ReconciliationMetaData
 		"$lt": reconciliationMetaData.EndTime,
 	}, "e5_command_error": bson.M{"$ne": ""}}).All(&penalties)
 	if err != nil {
-		log.Info("MK: error retrieving lfp dat => " + fmt.Errorf("error connecting to MongoDB: %s", err).Error())
+		log.Info("MK: error retrieving lfp data")
 		return penaltiesData, fmt.Errorf("error retrieving lfp data: %s", err)
 	}
 
