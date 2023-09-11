@@ -9,9 +9,9 @@ import (
 	"github.com/companieshouse/chs.go/log"
 	"github.com/companieshouse/lfp-error-reporter/config"
 	"github.com/companieshouse/lfp-error-reporter/models"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"gopkg.in/mgo.v2/bson"
 )
 
 // Mongo provides a MongoDB implementation of the DAO
@@ -71,9 +71,10 @@ func (m *Mongo) GetLFPData(reconciliationMetaData *models.ReconciliationMetaData
 	collection := m.Client.Database(m.Config.Database).Collection(m.Config.LFPCollection)
 
 	var dataItem bson.D
-	err = collection.FindOne(context.TODO(), bson.D{}).Decode(&dataItem)
+	testFilter := bson.D{{"company_number", "10000025"}}
+	err = collection.FindOne(context.TODO(), testFilter).Decode(&dataItem)
 	if err != nil {
-		log.Info("MK: GetLFPData: m.Client.ListDatabaseNames error returned => " + err.Error())
+		log.Info("MK: GetLFPData: Decode(&dataItem) => " + err.Error())
 	}
 	if dataItem != nil {
 		fmt.Println("MK: dataItem => : ", dataItem)
