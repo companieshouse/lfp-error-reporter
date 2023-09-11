@@ -44,8 +44,7 @@ func (m *Mongo) getMongoClient() error {
 			log.Info("MK: getMongoClient: error establishing db connection => " + err.Error())
 			return err
 		}
-		var dbNames []string
-		dbNames, err = m.Client.ListDatabaseNames(ctx, bson.D{})
+		dbNames, err := m.Client.ListDatabaseNames(ctx, bson.D{})
 		if err != nil {
 			log.Info("MK: getMongoClient: m.Client.ListDatabaseNames error returned => " + err.Error())
 		}
