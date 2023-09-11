@@ -44,12 +44,15 @@ func (m *Mongo) getMongoClient() error {
 			log.Info("MK: getMongoClient: error establishing db connection => " + err.Error())
 			return err
 		}
-		dbNames, _ := m.Client.ListDatabaseNames(ctx, bson.D{{"empty", false}})
-		if dbNames != nil {
+		var dbNames []string
+		dbNames, _ = m.Client.ListDatabaseNames(ctx, bson.D{})
+		if len(dbNames) > 0 {
 			log.Info("MK: getMongoClient: len(session.DatabaseNames())) => " + strconv.Itoa(len(dbNames)))
 			for dbCnt, dbName := range dbNames {
 				log.Info("MK: [" + strconv.Itoa(dbCnt) + "] dbName => : " + dbName)
 			}
+		} else {
+			log.Info("MK: getMongoClient: len(dbNames) == 0")
 		}
 	}
 	log.Info("MK: getMongoClient: returning session copy...")
