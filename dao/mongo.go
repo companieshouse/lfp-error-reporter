@@ -45,7 +45,10 @@ func (m *Mongo) getMongoClient() error {
 			return err
 		}
 		var dbNames []string
-		dbNames, _ = m.Client.ListDatabaseNames(ctx, bson.D{})
+		dbNames, err = m.Client.ListDatabaseNames(ctx, bson.D{})
+		if err != nil {
+			log.Info("MK: getMongoClient: m.Client.ListDatabaseNames error returned => " + err.Error())
+		}
 		if len(dbNames) > 0 {
 			log.Info("MK: getMongoClient: len(session.DatabaseNames())) => " + strconv.Itoa(len(dbNames)))
 			for dbCnt, dbName := range dbNames {
