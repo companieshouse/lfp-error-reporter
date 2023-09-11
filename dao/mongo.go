@@ -9,9 +9,9 @@ import (
 	"github.com/companieshouse/chs.go/log"
 	"github.com/companieshouse/lfp-error-reporter/config"
 	"github.com/companieshouse/lfp-error-reporter/models"
-	"github.com/globalsign/mgo/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"gopkg.in/mgo.v2/bson"
 )
 
 // Mongo provides a MongoDB implementation of the DAO
@@ -44,18 +44,6 @@ func (m *Mongo) getMongoClient() error {
 			log.Info("MK: getMongoClient: error establishing db connection => " + err.Error())
 			return err
 		}
-		dbNames, err := m.Client.ListDatabaseNames(ctx, bson.D{})
-		if err != nil {
-			log.Info("MK: getMongoClient: m.Client.ListDatabaseNames error returned => " + err.Error())
-		}
-		if len(dbNames) > 0 {
-			log.Info("MK: getMongoClient: len(session.DatabaseNames())) => " + strconv.Itoa(len(dbNames)))
-			for dbCnt, dbName := range dbNames {
-				log.Info("MK: [" + strconv.Itoa(dbCnt) + "] dbName => : " + dbName)
-			}
-		} else {
-			log.Info("MK: getMongoClient: len(dbNames) == 0")
-		}
 	}
 	log.Info("MK: getMongoClient: returning session copy...")
 	return nil
@@ -81,6 +69,15 @@ func (m *Mongo) GetLFPData(reconciliationMetaData *models.ReconciliationMetaData
 
 	log.Info("MK: closing Mongo session.")
 	collection := m.Client.Database(m.Config.Database).Collection(m.Config.LFPCollection)
+
+	dataItem, err := collection.FindOne(context.TODO(), bson.D{}).DecodeBytes()
+	if err != nil {
+		log.Info("MK: GetLFPData: m.Client.ListDatabaseNames error returned => " + err.Error())
+	}
+	if dataItem != nil {
+		log.Info("MK: dataItem => : " + string(dataItem))
+	}
+
 	filter := bson.M{"data.created_at": bson.M{
 		"$gt": reconciliationMetaData.StartTime,
 		"$lt": reconciliationMetaData.EndTime,
