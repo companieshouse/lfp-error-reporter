@@ -70,12 +70,13 @@ func (m *Mongo) GetLFPData(reconciliationMetaData *models.ReconciliationMetaData
 	log.Info("MK: closing Mongo session.")
 	collection := m.Client.Database(m.Config.Database).Collection(m.Config.LFPCollection)
 
-	dataItem, err := collection.FindOne(context.TODO(), bson.D{}).DecodeBytes()
+	var dataItem bson.D
+	err = collection.FindOne(context.TODO(), bson.D{}).Decode(&dataItem)
 	if err != nil {
 		log.Info("MK: GetLFPData: m.Client.ListDatabaseNames error returned => " + err.Error())
 	}
 	if dataItem != nil {
-		log.Info("MK: dataItem => : " + string(dataItem))
+		fmt.Println("MK: dataItem => : ", dataItem)
 	}
 
 	filter := bson.M{"data.created_at": bson.M{
