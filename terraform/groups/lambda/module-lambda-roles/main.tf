@@ -87,10 +87,10 @@ resource "aws_iam_role" "lfp_error_reporter_execution" {
 # ------------------------------------------------------------------------------
 resource "aws_iam_role_policy" "lfp_error_reporter_execution" {
   name   = "lfp_error_reporter_execution"
-  role   = "${aws_iam_role.lfp_error_reporter_execution.id}"
-  policy = "${data.aws_iam_policy_document.lfp_error_reporter_execution.json}"
+  role   = aws_iam_role.lfp_error_reporter_execution.id
+  policy = data.aws_iam_policy_document.lfp_error_reporter_execution.json
 }
 
 output "execution_role" {
-  value = "${aws_iam_role.lfp_error_reporter_execution.arn}"
+  value = aws_iam_role.lfp_error_reporter_execution.arn
 }
