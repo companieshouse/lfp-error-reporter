@@ -11,7 +11,7 @@ resource "aws_cloudwatch_event_target" "call_lfp_error_reporter_lambda" {
 }
 
 resource "aws_lambda_permission" "allow_cloudwatch_to_call_lfp_error_reporter" {
-    statement_id = "AllowExecutionFromCloudWatch"
+    statement_id = "AllowLambdaExecutionFromCloudWatch"
     action = "lambda:InvokeFunction"
     function_name = "${var.service}-${var.environment}"
     principal = "events.amazonaws.com"
