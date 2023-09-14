@@ -1,5 +1,5 @@
 resource "aws_security_group" "lfp_error_reporter" {
-  name        = "${var.environment}-${var.service}-lambda-into-vpc"
+  name        = "${var.environment}-${var.service}-lambda-vpc"
   description = "Outbound rules for payment error reporter lambda"
   vpc_id = var.vpc_id
 
@@ -11,6 +11,6 @@ resource "aws_security_group" "lfp_error_reporter" {
   }
 }
 
-output "lambda_into_vpc_id" {
+output "lambda_vpc_id" {
   value = aws_security_group.lfp_error_reporter.id
 }
