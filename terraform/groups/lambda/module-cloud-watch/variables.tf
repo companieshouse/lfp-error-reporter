@@ -1,5 +1,5 @@
 variable service {
-  type        = string
+  type = string
 }
 
 variable lambda_arn {
@@ -8,9 +8,9 @@ variable lambda_arn {
 }
 
 variable environment {
-  type        = string
+  type = string
 }
 
 variable cron_schedule {
-  type        = string
+  type = string
 }

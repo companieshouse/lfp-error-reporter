@@ -79,7 +79,7 @@ data "aws_iam_policy_document" "lfp_error_reporter_execution" {
 # ------------------------------------------------------------------------------
 resource "aws_iam_role" "lfp_error_reporter_execution" {
   name               = "${var.service}-execution-${var.environment}"
-  assume_role_policy = "${data.aws_iam_policy_document.lfp_error_reporter_trust.json}"
+  assume_role_policy = data.aws_iam_policy_document.lfp_error_reporter_trust.json
 }
 
 # ------------------------------------------------------------------------------
