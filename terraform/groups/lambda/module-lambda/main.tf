@@ -14,13 +14,13 @@ resource "aws_lambda_function" "lfp_error_reporter" {
   memory_size   = var.memory_megabytes
   timeout       = var.timeout_seconds
   runtime       = var.runtime
-  
+
   vpc_config {
     subnet_ids         = var.subnet_ids
     security_group_ids = var.security_group_ids
   }
   environment {
-    variables = merge (
+    variables = merge(
       data.vault_generic_secret.lambda_environment_variables.data,
       var.open_lambda_environment_variables
     )

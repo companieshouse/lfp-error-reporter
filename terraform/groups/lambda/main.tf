@@ -32,20 +32,20 @@ locals {
 }
 
 module "lambda" {
-  source               = "./module-lambda"
-  service              = var.service
-  handler              = var.handler
-  memory_megabytes     = var.memory_megabytes
-  runtime              = var.runtime
-  timeout_seconds      = var.timeout_seconds
-  release_version      = var.release_version
-  release_bucket_name  = var.release_bucket_name
-  execution_role       = module.lambda-roles.execution_role
+  source                            = "./module-lambda"
+  service                           = var.service
+  handler                           = var.handler
+  memory_megabytes                  = var.memory_megabytes
+  runtime                           = var.runtime
+  timeout_seconds                   = var.timeout_seconds
+  release_version                   = var.release_version
+  release_bucket_name               = var.release_bucket_name
+  execution_role                    = module.lambda-roles.execution_role
   open_lambda_environment_variables = var.open_lambda_environment_variables
-  aws_profile          = var.aws_profile
-  subnet_ids           = local.test_and_development_subnet_ids
-  security_group_ids   = [module.security-group.lambda_into_vpc_id]
-  environment          = var.environment
+  aws_profile                       = var.aws_profile
+  subnet_ids                        = local.test_and_development_subnet_ids
+  security_group_ids                = [module.security-group.lambda_into_vpc_id]
+  environment                       = var.environment
 }
 
 module "lambda-roles" {

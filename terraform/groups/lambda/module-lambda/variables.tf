@@ -1,33 +1,33 @@
 variable handler {
-  type        = string
+  type = string
 }
 
 variable memory_megabytes {
-  type        = string
+  type = string
 }
 
 variable release_bucket_name {
-  type        = string
+  type = string
 }
 
 variable runtime {
-  type        = string
+  type = string
 }
 
 variable timeout_seconds {
-  type        = string
+  type = string
 }
 
 variable service {
-  type        = string
+  type = string
 }
 
 variable release_version {
-  type        = string
+  type = string
 }
 
 variable open_lambda_environment_variables {
-  type        = map(string)
+  type = map(string)
 }
 
 variable execution_role {
@@ -46,9 +46,9 @@ variable security_group_ids {
 }
 
 variable environment {
-  type        = string
+  type = string
 }
 
 variable aws_profile {
-  type        = string
+  type = string
 }
