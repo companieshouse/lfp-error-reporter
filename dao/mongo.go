@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/companieshouse/chs.go/log"
 	"github.com/companieshouse/lfp-error-reporter/config"
 	"github.com/companieshouse/lfp-error-reporter/models"
 	"go.mongodb.org/mongo-driver/bson"
@@ -43,8 +44,10 @@ func (m *Mongo) getMongoClient() error {
 func (m *Mongo) GetLFPData(reconciliationMetaData *models.ReconciliationMetaData) (models.PenaltyList, error) {
 	ctx := context.Background()
 	var (
-		penalties     []models.PayableResourceDao
-		penaltiesData models.PenaltyList
+		penalties       []models.PayableResourceDao
+		penaltiesData   models.PenaltyList
+		lambdaStartTime = reconciliationMetaData.StartTime.AddDate(0, 0, -1)
+		lambdaEndTime   = reconciliationMetaData.EndTime.AddDate(0, 0, -1)
 	)
 
 	err := m.getMongoClient()
@@ -54,9 +57,12 @@ func (m *Mongo) GetLFPData(reconciliationMetaData *models.ReconciliationMetaData
 
 	collection := m.Client.Database(m.Config.Database).Collection(m.Config.LFPCollection)
 
+	log.Info("GetLFPData: lambda start time: " + lambdaStartTime.String())
+	log.Info("GetLFPData: lambda end time: " + lambdaEndTime.String())
+
 	filter := bson.M{"data.created_at": bson.M{
-		"$gt": reconciliationMetaData.StartTime,
-		"$lt": reconciliationMetaData.EndTime,
+		"$gt": lambdaStartTime,
+		"$lt": lambdaEndTime,
 	}, "e5_command_error": bson.M{"$ne": ""}}
 	cursor, err := collection.Find(ctx, filter)
 	if err != nil {

@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"testing"
+	"time"
 
 	"github.com/companieshouse/lfp-error-reporter/config"
 	"github.com/companieshouse/lfp-error-reporter/dao"
@@ -11,9 +12,12 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-const expectedTLFPFileNamePrefix string = "CHS-LFP-CARD-ERRORS-"
-const expectedCSVFileSuffix = ".csv"
-const reconciliationDate string = "2019-01-01"
+const (
+	expectedTLFPFileNamePrefix string = "CHS-LFP-CARD-ERRORS-"
+	expectedCSVFileSuffix      string = ".csv"
+	reconciliationDate         string = "2019-01-01"
+	timeFormatLayout           string = "2006-01-02"
+)
 
 func createMockService(cfg *config.Config, mockDao *dao.MockDAO) *ServiceImpl {
 
@@ -28,9 +32,12 @@ func TestUnitGetLFPCSV(t *testing.T) {
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
 
+	startTime, _ := time.Parse(timeFormatLayout, reconciliationDate)
+
 	cfg := config.Config{}
 	reconciliationMetaData := models.ReconciliationMetaData{
 		ReconciliationDate: reconciliationDate,
+		StartTime:          startTime,
 	}
 
 	Convey("Subject: Success", t, func() {
@@ -52,7 +59,7 @@ func TestUnitGetLFPCSV(t *testing.T) {
 				Convey("And a CSV is successfully constructed", func() {
 
 					So(lfpsCSV, ShouldNotBeNil)
-					So(lfpsCSV.FileName, ShouldEqual, expectedTLFPFileNamePrefix+reconciliationMetaData.ReconciliationDate+expectedCSVFileSuffix)
+					So(lfpsCSV.FileName, ShouldEqual, expectedTLFPFileNamePrefix+reconciliationMetaData.StartTime.AddDate(0, 0, -1).Format(timeFormatLayout)+expectedCSVFileSuffix)
 				})
 			})
 		})
