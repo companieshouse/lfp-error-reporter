@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/companieshouse/chs.go/log"
 	"github.com/companieshouse/lfp-error-reporter/config"
 	"github.com/companieshouse/lfp-error-reporter/models"
 	"go.mongodb.org/mongo-driver/bson"
@@ -54,9 +55,12 @@ func (m *Mongo) GetLFPData(reconciliationMetaData *models.ReconciliationMetaData
 
 	collection := m.Client.Database(m.Config.Database).Collection(m.Config.LFPCollection)
 
+	log.Info("GetLFPData: reconciliationMetaData.StartTime (start time): " + reconciliationMetaData.StartTime.String())
+	log.Info("GetLFPData: reconciliationMetaData.EndTime (end time): " + reconciliationMetaData.EndTime.String())
+
 	filter := bson.M{"data.created_at": bson.M{
-		"$gt": reconciliationMetaData.StartTime,
-		"$lt": reconciliationMetaData.EndTime,
+		"$gt": reconciliationMetaData.StartTime.AddDate(0, 0, -1),
+		"$lt": reconciliationMetaData.EndTime.AddDate(0, 0, -1),
 	}, "e5_command_error": bson.M{"$ne": ""}}
 	cursor, err := collection.Find(ctx, filter)
 	if err != nil {

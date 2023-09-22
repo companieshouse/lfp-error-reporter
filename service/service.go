@@ -10,8 +10,11 @@ import (
 	"github.com/companieshouse/lfp-error-reporter/models"
 )
 
-const lfpFileNamePrefix = "CHS-LFP-CARD-ERRORS-"
-const csvFileSuffix = ".csv"
+const (
+	lfpFileNamePrefix string = "CHS-LFP-CARD-ERRORS-"
+	csvFileSuffix     string = ".csv"
+	YYYYMMDD          string = "2006-01-02"
+)
 
 // Service provides functionality by which to fetch lfp error CSV's
 type Service interface {
@@ -69,9 +72,8 @@ func (s *ServiceImpl) GetLFPCSV(reconciliationMetaData *models.ReconciliationMet
 
 // constructCSV marshals CSVable data into a CSV, accompanied by a file name
 func constructCSV(data models.CSVable, fileNamePrefix string, reconciliationMetaData *models.ReconciliationMetaData) models.CSV {
-
 	return models.CSV{
 		Data:     data,
-		FileName: fileNamePrefix + reconciliationMetaData.ReconciliationDate + csvFileSuffix,
+		FileName: fileNamePrefix + reconciliationMetaData.StartTime.AddDate(0, 0, -1).Format(YYYYMMDD) + csvFileSuffix,
 	}
 }
