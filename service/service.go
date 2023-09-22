@@ -72,6 +72,6 @@ func constructCSV(data models.CSVable, fileNamePrefix string, reconciliationMeta
 
 	return models.CSV{
 		Data:     data,
-		FileName: fileNamePrefix + reconciliationMetaData.ReconciliationDate + csvFileSuffix,
+		FileName: fileNamePrefix + reconciliationMetaData.StartTime.AddDate(0, 0, -1).String() + csvFileSuffix,
 	}
 }
