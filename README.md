@@ -1,5 +1,8 @@
 # lfp-error-reporter
-A lambda to report errors from the lfp service when communicating with e5. This service collates failed lfp payments from the payable resources collection and writes it to CSV's on an SFTP server.
+A lambda to report errors from the lfp service when communicating with e5. This service collates failed lfp payments from the payable resources collection and writes it to CSV's on an SFTP server. More information can be found [here](https://companieshouse.atlassian.net/wiki/spaces/TEAM8/pages/2824667427/LFP+Error+Reporter)
+
+> [!IMPORTANT]  
+> Testing can only be carried out from CIDEV as an instance of AWS CloudWatch is required and is documented [here](https://companieshouse.atlassian.net/wiki/spaces/TEAM8/pages/2824667427/LFP+Error+Reporter#Testing-on-AWS).
 
 ### The Lambda function
 This API runs on AWS Lambda. Release and deployment of the lambda is similar to that of other trunk based services. 
