@@ -65,16 +65,19 @@ variable open_lambda_environment_variables {
   default     = {}
 }
 
+# PH: we don't need these anymore, since we symlink the vault-providers/vault.tf file !
+# PH: which uses hashicorp_vault_{username, password}
 # Vault
-variable "vault_username" {
-  type        = string
-  description = "The username used by the Vault provider."
-}
-variable "vault_password" {
-  type        = string
-  description = "The password used by the Vault provider."
-}
+# variable "vault_username" {
+#   type        = string
+#   description = "The username used by the Vault provider."
+# }
+# variable "vault_password" {
+#   type        = string
+#   description = "The password used by the Vault provider."
+# }
 
+# PH: todo -- this two can be removed
 # Network Remote State
 variable "remote_state_bucket" {
   type        = string

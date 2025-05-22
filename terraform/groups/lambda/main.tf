@@ -4,7 +4,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = ">= 5.72.0, < 6.0"
+      version = ">= 5.72.0, < 5.73"
     }
     vault = {
       source  = "hashicorp/vault"
@@ -21,17 +21,6 @@ provider "aws" {
   region = var.aws_region
 }
 
-# PH: this is same as in efs-doc-proc so is ok
-provider "vault" {
-  auth_login {
-    path = "auth/userpass/login/${var.vault_username}"
-    parameters = {
-      password = var.vault_password
-    }
-  }
-  address = ""
-}
-
 # PH: we should not be using remote state - this is not best practice
 # (see my note here: https://companieshouse.atlassian.net/wiki/spaces/~642153ecf1b529dfa98e4afc/pages/5150343173/Terraform+Lambda+Module#PR-Review)
 data "terraform_remote_state" "network_remote_state" {
@@ -44,8 +33,8 @@ data "terraform_remote_state" "network_remote_state" {
 }
 
 # PH: related to the above, get rid of this and
-# PH: this relates back to the last convo I had with Jamie (see locals.tf in efs-doc-proc)
-# PH: basically,
+# PH: this relates back to the last convo I had with JW (see locals.tf in efs-doc-proc)
+# PH: basically, we can filter the necessary resources by tag:Name etc and use those
 locals {
   test_and_development_vpc_id     = data.terraform_remote_state.network_remote_state.outputs.vpc_id
   test_and_development_subnet_ids = split(",", data.terraform_remote_state.network_remote_state.outputs.application_ids)
