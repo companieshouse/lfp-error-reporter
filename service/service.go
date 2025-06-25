@@ -1,6 +1,6 @@
 // Package service contains the logic that retrieves the LFP data and constructs the CSV file
 package service
-// temporary comment to test pipeline analyse-pull-request job
+// temporary comment to test pipeline analyse-pull-request, build-test-analyse, and build-release jobs
 import (
 	"reflect"
 
