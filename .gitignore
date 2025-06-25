@@ -1,0 +1,25 @@
+# Build artifacts
+lfp-error-reporter
+lfp-error-reporter-*.zip
+build.log
+vendor/
+
+#VS Code files
+/.vscode/*
+*.code-workspace
+!/.vscode/settings.json
+
+# Test output
+test.xml
+coverage.*
+
+# Lint output
+lint.txt
+
+# GoLand files
+.idea/
+*.iml
+
+# Mac files
+.DS_Store
+._*
