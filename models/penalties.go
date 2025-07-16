@@ -22,8 +22,8 @@ type TransactionDao struct {
 type PayableResourceDao struct {
 	ID             string                 `bson:"_id"`
 	E5CommandError string                 `bson:"e5_command_error"`
-	CompanyNumber  string                 `bson:"company_number"`
-	Reference      string                 `bson:"reference"`
+	CustomerCode   string                 `bson:"customer_code"`
+	PayableRef     string                 `bson:"payable_ref"`
 	Data           PayableResourceDataDao `bson:"data"`
 }
 

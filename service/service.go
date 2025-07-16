@@ -1,8 +1,6 @@
 // Package service contains the logic that retrieves the LFP data and constructs the CSV file
 package service
 
-// temporary comment to test pipeline
-
 import (
 	"reflect"
 
@@ -59,8 +57,8 @@ func (s *ServiceImpl) GetLFPCSV(reconciliationMetaData *models.ReconciliationMet
 		keys := reflect.ValueOf(p.Data.Transactions).MapKeys()
 		penaltyErrorData := models.PenaltyErrorData{
 			TransactionDate: p.Data.CreatedAt,
-			PUON:            p.Reference,
-			CompanyNumber:   p.CompanyNumber,
+			PUON:            p.PayableRef,
+			CompanyNumber:   p.CustomerCode,
 			MadeUpDate:      p.Data.Transactions[keys[0].String()].MadeUpDate,
 			Value:           p.Data.Transactions[keys[0].String()].Amount,
 		}
