@@ -8,8 +8,6 @@ terraform {
   }
 }
 
-# temporary to trigger the pipeline
-
 provider "vault" {
   auth_login {
     path = "auth/userpass/login/${var.vault_username}"
