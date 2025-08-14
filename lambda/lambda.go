@@ -54,16 +54,16 @@ func (lambda *Lambda) Execute(reconciliationMetaData *models.ReconciliationMetaD
 
 	log.Info("Penalty payment error reporting lambda executing. Getting penalties with e5 errors for date: " + reconciliationMetaData.ReconciliationDate + ". Creating penalty payment error CSV.")
 
-	ppsCSV, err := lambda.Service.GetPPSCSV(reconciliationMetaData)
+	failingPaymentsCSV, err := lambda.Service.GetFailingPaymentCSV(reconciliationMetaData)
 	if err != nil {
 		log.Error(err)
 		return err
 	}
 
 	log.Info("Penalty payment error CSV constructed.")
-	log.Trace("Penalty payment error CSV", log.Data{"pps_csv": ppsCSV})
+	log.Trace("Penalty payment error CSV", log.Data{"failing_payment_csv": failingPaymentsCSV})
 
-	err = lambda.FileTransfer.UploadCSVFiles([]models.CSV{ppsCSV})
+	err = lambda.FileTransfer.UploadCSVFiles([]models.CSV{failingPaymentsCSV})
 	if err != nil {
 		log.Error(err)
 		return err

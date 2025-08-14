@@ -11,14 +11,14 @@ import (
 )
 
 const (
-	ppsFileNamePrefix string = "CHS-PENALTY-PAYMENT-E5-ERRORS-"
-	csvFileSuffix     string = ".csv"
-	YYYYMMDD          string = "2006-01-02"
+	penaltyPaymentErrorFileNamePrefix string = "CHS-PENALTY-PAYMENT-E5-ERRORS-"
+	csvFileSuffix                     string = ".csv"
+	YYYYMMDD                          string = "2006-01-02"
 )
 
 // Service provides functionality by which to fetch penalty payment error CSV's
 type Service interface {
-	GetPPSCSV(reconciliationMetaData *models.ReconciliationMetaData) (models.CSV, error)
+	GetFailingPaymentCSV(reconciliationMetaData *models.ReconciliationMetaData) (models.CSV, error)
 }
 
 // ServiceImpl provides a concrete implementation of the Service interface
@@ -36,20 +36,20 @@ func New(cfg *config.Config) *ServiceImpl {
 	}
 }
 
-// GetPPSCSV retrieves penalty payment data and constructs a CSV
-func (s *ServiceImpl) GetPPSCSV(reconciliationMetaData *models.ReconciliationMetaData) (models.CSV, error) {
+// GetFailingPaymentCSV retrieves penalty payment data and constructs a CSV
+func (s *ServiceImpl) GetFailingPaymentCSV(reconciliationMetaData *models.ReconciliationMetaData) (models.CSV, error) {
 
 	var csv models.CSV
 
 	log.Info("Fetching penalty payment data.")
 
-	penalties, err := s.DAO.GetPPSData(reconciliationMetaData)
+	penalties, err := s.DAO.GetPenaltyPaymentData(reconciliationMetaData)
 	if err != nil {
 		return csv, err
 	}
 
 	log.Info("Successfully retrieved penalty payment data.")
-	log.Trace("Penalty payment data", log.Data{"pps_data": penalties})
+	log.Trace("Penalty payment data", log.Data{"penalty_payment_data": penalties})
 
 	// Convert Penalty payment data to format required for CSV
 	var penaltyErrorDataList models.PenaltyErrorDataList
@@ -65,7 +65,7 @@ func (s *ServiceImpl) GetPPSCSV(reconciliationMetaData *models.ReconciliationMet
 		penaltyErrorDataList.Penalties = append(penaltyErrorDataList.Penalties, penaltyErrorData)
 	}
 
-	csv = constructCSV(penaltyErrorDataList, ppsFileNamePrefix, reconciliationMetaData)
+	csv = constructCSV(penaltyErrorDataList, penaltyPaymentErrorFileNamePrefix, reconciliationMetaData)
 
 	return csv, nil
 }

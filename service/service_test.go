@@ -13,10 +13,10 @@ import (
 )
 
 const (
-	expectedTPPSFileNamePrefix string = "CHS-PPS-CARD-ERRORS-"
-	expectedCSVFileSuffix      string = ".csv"
-	reconciliationDate         string = "2019-01-01"
-	timeFormatLayout           string = "2006-01-02"
+	expectedFileNamePrefix string = "CHS-PENALTY-PAYMENT-E5-ERRORS-"
+	expectedCSVFileSuffix  string = ".csv"
+	reconciliationDate     string = "2019-01-01"
+	timeFormatLayout       string = "2006-01-02"
 )
 
 func createMockService(cfg *config.Config, mockDao *dao.MockDAO) *ServiceImpl {
@@ -27,7 +27,7 @@ func createMockService(cfg *config.Config, mockDao *dao.MockDAO) *ServiceImpl {
 	}
 }
 
-func TestUnitGetPPSCSV(t *testing.T) {
+func TestUnitGetFailingPaymentCSV(t *testing.T) {
 
 	mockCtrl := gomock.NewController(t)
 	defer mockCtrl.Finish()
@@ -48,18 +48,18 @@ func TestUnitGetPPSCSV(t *testing.T) {
 
 		Convey("Given penalty payment data is successfully fetched", func() {
 
-			var ppss models.PenaltyList
-			mockDao.EXPECT().GetPPSData(&reconciliationMetaData).Return(ppss, nil).Times(1)
+			var penaltyPayments models.PenaltyList
+			mockDao.EXPECT().GetPenaltyPaymentData(&reconciliationMetaData).Return(penaltyPayments, nil).Times(1)
 
 			Convey("Then no errors are returned", func() {
 
-				ppssCSV, err := svc.GetPPSCSV(&reconciliationMetaData)
+				failingPaymentCSV, err := svc.GetFailingPaymentCSV(&reconciliationMetaData)
 				So(err, ShouldBeNil)
 
 				Convey("And a CSV is successfully constructed", func() {
 
-					So(ppssCSV, ShouldNotBeNil)
-					So(ppssCSV.FileName, ShouldEqual, expectedTPPSFileNamePrefix+reconciliationMetaData.StartTime.AddDate(0, 0, -1).Format(timeFormatLayout)+expectedCSVFileSuffix)
+					So(failingPaymentCSV, ShouldNotBeNil)
+					So(failingPaymentCSV.FileName, ShouldEqual, expectedFileNamePrefix+reconciliationMetaData.StartTime.AddDate(0, 0, -1).Format(timeFormatLayout)+expectedCSVFileSuffix)
 				})
 			})
 		})
@@ -73,16 +73,16 @@ func TestUnitGetPPSCSV(t *testing.T) {
 
 		Convey("Given an error when fetching Penalty payment data", func() {
 
-			var ppss models.PenaltyList
-			mockDao.EXPECT().GetPPSData(&reconciliationMetaData).Return(ppss, errors.New("failure to fetch penalty payment data")).Times(1)
+			var penaltyPayments models.PenaltyList
+			mockDao.EXPECT().GetPenaltyPaymentData(&reconciliationMetaData).Return(penaltyPayments, errors.New("failure to fetch penalty payment data")).Times(1)
 
 			Convey("Then errors are returned", func() {
 
-				ppssCSV, err := svc.GetPPSCSV(&reconciliationMetaData)
+				failingPaymentCSV, err := svc.GetFailingPaymentCSV(&reconciliationMetaData)
 				So(err, ShouldNotBeNil)
 
 				Convey("And no CSV is constructed", func() {
-					So(ppssCSV.Data, ShouldBeNil)
+					So(failingPaymentCSV.Data, ShouldBeNil)
 				})
 			})
 		})

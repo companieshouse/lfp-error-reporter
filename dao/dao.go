@@ -7,5 +7,5 @@ import (
 
 // DAO provides access to the database
 type DAO interface {
-	GetPPSData(reconciliationMetaData *models.ReconciliationMetaData) (models.PenaltyList, error)
+	GetPenaltyPaymentData(reconciliationMetaData *models.ReconciliationMetaData) (models.PenaltyList, error)
 }

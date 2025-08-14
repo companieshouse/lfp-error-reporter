@@ -34,17 +34,17 @@ func (m *MockDAO) EXPECT() *MockDAOMockRecorder {
 	return m.recorder
 }
 
-// GetPPSData mocks base method
-func (m *MockDAO) GetPPSData(reconciliationMetaData *models.ReconciliationMetaData) (models.PenaltyList, error) {
+// GetPenaltyPaymentData mocks base method
+func (m *MockDAO) GetPenaltyPaymentData(reconciliationMetaData *models.ReconciliationMetaData) (models.PenaltyList, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetPPSData", reconciliationMetaData)
+	ret := m.ctrl.Call(m, "GetPenaltyPaymentData", reconciliationMetaData)
 	ret0, _ := ret[0].(models.PenaltyList)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetPPSData indicates an expected call of GetPPSData
-func (mr *MockDAOMockRecorder) GetPPSData(reconciliationMetaData interface{}) *gomock.Call {
+// GetPenaltyPaymentData indicates an expected call of GetPenaltyPaymentData
+func (mr *MockDAOMockRecorder) GetPenaltyPaymentData(reconciliationMetaData interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPPSData", reflect.TypeOf((*MockDAO)(nil).GetPPSData), reconciliationMetaData)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPenaltyPaymentData", reflect.TypeOf((*MockDAO)(nil).GetPenaltyPaymentData), reconciliationMetaData)
 }

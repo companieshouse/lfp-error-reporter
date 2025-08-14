@@ -14,29 +14,29 @@ import (
 
 // key constants
 const (
-	PPSCOLLECTIONKEYCONST = `PPS_MONGODB_PAYABLE_RESOURCES_COLLECTION`
-	DATABASEKEYCONST      = `PPS_MONGODB_DATABASE`
-	MONGODBURLKEYCONST    = `MONGODB_URL`
-	SFTPSERVERKEYCONST    = `SFTP_SERVER`
-	SFTPPORTKEYCONST      = `SFTP_PORT`
-	SFTPUSERNAMEKEYCONST  = `SFTP_USERNAME`
-	SFTPPASSWORDKEYCONST  = `SFTP_PASSWORD`
-	SFTPFILEPATHKEYCONST  = `SFTP_FILE_PATH`
+	PENALTYPAYMENTCOLLECTIONKEYCONST = `PPS_MONGODB_PAYABLE_RESOURCES_COLLECTION`
+	DATABASEKEYCONST                 = `PPS_MONGODB_DATABASE`
+	MONGODBURLKEYCONST               = `MONGODB_URL`
+	SFTPSERVERKEYCONST               = `SFTP_SERVER`
+	SFTPPORTKEYCONST                 = `SFTP_PORT`
+	SFTPUSERNAMEKEYCONST             = `SFTP_USERNAME`
+	SFTPPASSWORDKEYCONST             = `SFTP_PASSWORD`
+	SFTPFILEPATHKEYCONST             = `SFTP_FILE_PATH`
 )
 
 // value constants
 const (
-	PpsCollectionConst = `pps-collection`
-	databaseConst      = `oriel-db`
-	mongoDbUrlConst    = `localhost:12344`
-	sftpServerConst    = `sftp-server`
-	sftpPortConst      = `sftp-port`
-	sftpUserNameConst  = `sftp-username`
-	sftpPasswordConst  = `sftp-password`
-	sftpFilePathConst  = `sftp-file-path`
-	nameConst          = `chs-log-test`
-	namespaceConst     = `chs-namespace-test`
-	configConst        = `config`
+	penaltyPaymentCollectionConst = `pps-collection`
+	databaseConst                 = `oriel-db`
+	mongoDbUrlConst               = `localhost:12344`
+	sftpServerConst               = `sftp-server`
+	sftpPortConst                 = `sftp-port`
+	sftpUserNameConst             = `sftp-username`
+	sftpPasswordConst             = `sftp-password`
+	sftpFilePathConst             = `sftp-file-path`
+	nameConst                     = `chs-log-test`
+	namespaceConst                = `chs-namespace-test`
+	configConst                   = `config`
 )
 
 func TestConfig(t *testing.T) {
@@ -46,24 +46,24 @@ func TestConfig(t *testing.T) {
 		err           error
 		configuration *config.Config
 		envVars       = map[string]string{
-			PPSCOLLECTIONKEYCONST: PpsCollectionConst,
-			DATABASEKEYCONST:      databaseConst,
-			MONGODBURLKEYCONST:    mongoDbUrlConst,
-			SFTPSERVERKEYCONST:    sftpServerConst,
-			SFTPPORTKEYCONST:      sftpPortConst,
-			SFTPUSERNAMEKEYCONST:  sftpUserNameConst,
-			SFTPPASSWORDKEYCONST:  sftpPasswordConst,
-			SFTPFILEPATHKEYCONST:  sftpFilePathConst,
+			PENALTYPAYMENTCOLLECTIONKEYCONST: penaltyPaymentCollectionConst,
+			DATABASEKEYCONST:                 databaseConst,
+			MONGODBURLKEYCONST:               mongoDbUrlConst,
+			SFTPSERVERKEYCONST:               sftpServerConst,
+			SFTPPORTKEYCONST:                 sftpPortConst,
+			SFTPUSERNAMEKEYCONST:             sftpUserNameConst,
+			SFTPPASSWORDKEYCONST:             sftpPasswordConst,
+			SFTPFILEPATHKEYCONST:             sftpFilePathConst,
 		}
 		builtConfig = config.Config{
-			PPSCollection: PpsCollectionConst,
-			Database:      databaseConst,
-			MongoDBURL:    mongoDbUrlConst,
-			SFTPServer:    sftpServerConst,
-			SFTPPort:      sftpPortConst,
-			SFTPUserName:  sftpUserNameConst,
-			SFTPPassword:  sftpPasswordConst,
-			SFTPFilePath:  sftpFilePathConst,
+			PayableResourcesCollection: penaltyPaymentCollectionConst,
+			Database:                   databaseConst,
+			MongoDBURL:                 mongoDbUrlConst,
+			SFTPServer:                 sftpServerConst,
+			SFTPPort:                   sftpPortConst,
+			SFTPUserName:               sftpUserNameConst,
+			SFTPPassword:               sftpPasswordConst,
+			SFTPFilePath:               sftpFilePathConst,
 		}
 		sftpUserNameRegex = regexp.MustCompile(sftpUserNameConst)
 		sftpPasswordRegex = regexp.MustCompile(sftpPasswordConst)

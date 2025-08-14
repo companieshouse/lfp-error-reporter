@@ -41,8 +41,8 @@ func (m *Mongo) getMongoClient() error {
 	return nil
 }
 
-// GetPPSData fetches penalty payment data
-func (m *Mongo) GetPPSData(reconciliationMetaData *models.ReconciliationMetaData) (models.PenaltyList, error) {
+// GetPenaltyPaymentData fetches penalty payment data
+func (m *Mongo) GetPenaltyPaymentData(reconciliationMetaData *models.ReconciliationMetaData) (models.PenaltyList, error) {
 	ctx := context.Background()
 	var (
 		penalties       []models.PayableResourceDao
@@ -56,10 +56,10 @@ func (m *Mongo) GetPPSData(reconciliationMetaData *models.ReconciliationMetaData
 		return penaltiesData, fmt.Errorf("error connecting to MongoDB: %s", err)
 	}
 
-	collection := m.Client.Database(m.Config.Database).Collection(m.Config.PPSCollection)
+	collection := m.Client.Database(m.Config.Database).Collection(m.Config.PayableResourcesCollection)
 
-	log.Info("GetPPSData: lambda start time: " + lambdaStartTime.String())
-	log.Info("GetPPSData: lambda end time: " + lambdaEndTime.String())
+	log.Info("GetPenaltyPaymentData: lambda start time: " + lambdaStartTime.String())
+	log.Info("GetPenaltyPaymentData: lambda end time: " + lambdaEndTime.String())
 
 	filter := bson.M{"data.created_at": bson.M{
 		"$gt": lambdaStartTime,

@@ -7,8 +7,8 @@ import (
 
 // Config holds configuration details required to execute the lambda.
 type Config struct {
-	PayableResourcesCollection string `env:"PPS_MONGODB_PAYABLE_RESOURCES_COLLECTION"       flag:"mongodb-payable-resources-collection"              flagDesc:"MongoDB collection for penalty payment data"`
-	Database                   string `env:"PPS_MONGODB_DATABASE"                           flag:"mongodb-database"                                  flagDesc:"MongoDB database for penalty payment data"`
+	PayableResourcesCollection string `env:"PPS_MONGODB_PAYABLE_RESOURCES_COLLECTION"       flag:"mongodb-payable-resources-collection"              flagDesc:"MongoDB collection 'payable_resources' for storage of penalty payment data"`
+	Database                   string `env:"PPS_MONGODB_DATABASE"                           flag:"mongodb-database"                                  flagDesc:"MongoDB database 'financial_penalties' for penalty payment data"`
 	MongoDBURL                 string `env:"MONGODB_URL"                                    flag:"mongodb-url"                                       flagDesc:"MongoDB server URL" json:"-"`
 	SFTPServer                 string `env:"SFTP_SERVER"                                    flag:"sftp-server"                                       flagDesc:"Name of the SFTP server" json:"-"`
 	SFTPPort                   string `env:"SFTP_PORT"                                      flag:"sftp-port"                                         flagDesc:"Port to connect to the SFTP server"`
