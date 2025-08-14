@@ -1,4 +1,4 @@
-// Package service contains the logic that retrieves the Penalty payment data and constructs the CSV file
+// Package service contains the logic that retrieves the penalty payment error data and constructs the CSV file
 package service
 
 import (
@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	ppsFileNamePrefix string = "CHS-PPS-CARD-ERRORS-"
+	ppsFileNamePrefix string = "CHS-PENALTY-PAYMENT-E5-ERRORS-"
 	csvFileSuffix     string = ".csv"
 	YYYYMMDD          string = "2006-01-02"
 )

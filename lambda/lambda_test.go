@@ -36,7 +36,7 @@ func TestUnitExecute(t *testing.T) {
 
 		lambda := createMockLambda(&cfg, mockService, mockFileTransfer)
 
-		Convey("Given a penalty payment CSV is constructed successfully", func() {
+		Convey("Given a penalty payment error CSV is constructed successfully", func() {
 
 			var PPSCSV models.CSV
 			mockService.EXPECT().GetPPSCSV(&reconciliationMetaData).Return(PPSCSV, nil).Times(1)

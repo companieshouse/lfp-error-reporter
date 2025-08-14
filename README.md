@@ -1,5 +1,5 @@
-# lfp-error-reporter
-A lambda to report errors from the penalty payment service when communicating with e5. This service collates failed penalty payments from the payable resources collection and writes it to CSV's on an SFTP server. More information can be found [here](https://companieshouse.atlassian.net/wiki/spaces/TEAM8/pages/2824667427/LFP+Error+Reporter)
+# Penalty Payment Error Reporter
+A lambda to report errors from the penalty payment service when communicating with E5 Financial Management System. This service collates failed E5 payment actions from the payable resources collection and writes it to a CSV file on an SFTP server. More information can be found [here](https://companieshouse.atlassian.net/wiki/spaces/TEAM8/pages/2824667427/LFP+Error+Reporter)
 
 > [!IMPORTANT]  
 > Testing can only be carried out from CIDEV as an instance of AWS CloudWatch is required and is documented [here](https://companieshouse.atlassian.net/wiki/spaces/TEAM8/pages/2824667427/LFP+Error+Reporter#Testing-on-AWS).
@@ -19,8 +19,8 @@ Environment variables required to execute the lambda:
 
 Name                                             | Description                                                                                              | Examples
 ------------------------------------------------ |----------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------
-MONGODB_PPS_ERR_REP_TRANSACTIONS_COLLECTION      | The name of the collection within the error reporting database from which to fetch penalty payment data. | 'payable_resources'
-MONGODB_PPS_ERR_REP_DATABASE                     | The name of the database containing the collection from which to fetch penalty payment data.             | 'late_filing_penalties'
+PPS_MONGODB_PAYABLE_RESOURCES_COLLECTION         | The name of the collection within the error reporting database from which to fetch penalty payment data. | 'payable_resources'
+PPS_MONGODB_DATABASE                             | The name of the database containing the collection from which to fetch penalty payment data.             | 'financial_penalties'
 MONGODB_URL                                      | The Mongo database URL.                                                                                  | 'mongodb://<mongo_host>:27017
 SFTP_SERVER                                      | The SFTP server host name.                                                                               | 
 SFTP_PORT                                        | The port over which to connect to the SFTP server.                                                       | '22'
