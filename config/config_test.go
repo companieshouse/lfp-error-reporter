@@ -4,17 +4,18 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/companieshouse/lfp-error-reporter/config"
 	"regexp"
 	"testing"
+
+	"github.com/companieshouse/lfp-error-reporter/config"
 
 	. "github.com/smartystreets/goconvey/convey"
 )
 
 // key constants
 const (
-	LFPCOLLECTIONKEYCONST = `MONGODB_LFP_ERR_REP_TRANSACTIONS_COLLECTION`
-	DATABASEKEYCONST      = `MONGODB_LFP_ERR_REP_DATABASE`
+	PPSCOLLECTIONKEYCONST = `MONGODB_PPS_ERR_REP_TRANSACTIONS_COLLECTION`
+	DATABASEKEYCONST      = `MONGODB_PPS_ERR_REP_DATABASE`
 	MONGODBURLKEYCONST    = `MONGODB_URL`
 	SFTPSERVERKEYCONST    = `SFTP_SERVER`
 	SFTPPORTKEYCONST      = `SFTP_PORT`
@@ -25,7 +26,7 @@ const (
 
 // value constants
 const (
-	LfpCollectionConst = `lpf-collection`
+	PpsCollectionConst = `pps-collection`
 	databaseConst      = `oriel-db`
 	mongoDbUrlConst    = `localhost:12344`
 	sftpServerConst    = `sftp-server`
@@ -45,7 +46,7 @@ func TestConfig(t *testing.T) {
 		err           error
 		configuration *config.Config
 		envVars       = map[string]string{
-			LFPCOLLECTIONKEYCONST: LfpCollectionConst,
+			PPSCOLLECTIONKEYCONST: PpsCollectionConst,
 			DATABASEKEYCONST:      databaseConst,
 			MONGODBURLKEYCONST:    mongoDbUrlConst,
 			SFTPSERVERKEYCONST:    sftpServerConst,
@@ -55,7 +56,7 @@ func TestConfig(t *testing.T) {
 			SFTPFILEPATHKEYCONST:  sftpFilePathConst,
 		}
 		builtConfig = config.Config{
-			LFPCollection: LfpCollectionConst,
+			PPSCollection: PpsCollectionConst,
 			Database:      databaseConst,
 			MongoDBURL:    mongoDbUrlConst,
 			SFTPServer:    sftpServerConst,
@@ -94,7 +95,7 @@ func TestConfig(t *testing.T) {
 
 			Convey("The generated JSON string from configuration should not contain sensitive data", func() {
 				jsonByte, err := json.Marshal(builtConfig)
-				
+
 				So(err, ShouldBeNil)
 				So(sftpUserNameRegex.Match(jsonByte), ShouldEqual, false)
 				So(sftpPasswordRegex.Match(jsonByte), ShouldEqual, false)

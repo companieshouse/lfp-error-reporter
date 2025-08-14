@@ -1,4 +1,4 @@
-// Package service contains the logic that retrieves the LFP data and constructs the CSV file
+// Package service contains the logic that retrieves the Penalty payment data and constructs the CSV file
 package service
 
 import (
@@ -11,14 +11,14 @@ import (
 )
 
 const (
-	lfpFileNamePrefix string = "CHS-LFP-CARD-ERRORS-"
+	ppsFileNamePrefix string = "CHS-PPS-CARD-ERRORS-"
 	csvFileSuffix     string = ".csv"
 	YYYYMMDD          string = "2006-01-02"
 )
 
-// Service provides functionality by which to fetch lfp error CSV's
+// Service provides functionality by which to fetch penalty payment error CSV's
 type Service interface {
-	GetLFPCSV(reconciliationMetaData *models.ReconciliationMetaData) (models.CSV, error)
+	GetPPSCSV(reconciliationMetaData *models.ReconciliationMetaData) (models.CSV, error)
 }
 
 // ServiceImpl provides a concrete implementation of the Service interface
@@ -36,22 +36,22 @@ func New(cfg *config.Config) *ServiceImpl {
 	}
 }
 
-// GetLFPCSV retrieves lfp data and constructs a CSV
-func (s *ServiceImpl) GetLFPCSV(reconciliationMetaData *models.ReconciliationMetaData) (models.CSV, error) {
+// GetPPSCSV retrieves penalty payment data and constructs a CSV
+func (s *ServiceImpl) GetPPSCSV(reconciliationMetaData *models.ReconciliationMetaData) (models.CSV, error) {
 
 	var csv models.CSV
 
-	log.Info("Fetching lfp data.")
+	log.Info("Fetching penalty payment data.")
 
-	penalties, err := s.DAO.GetLFPData(reconciliationMetaData)
+	penalties, err := s.DAO.GetPPSData(reconciliationMetaData)
 	if err != nil {
 		return csv, err
 	}
 
-	log.Info("Successfully retrieved lfp data.")
-	log.Trace("LFP data", log.Data{"lfp_data": penalties})
+	log.Info("Successfully retrieved penalty payment data.")
+	log.Trace("Penalty payment data", log.Data{"pps_data": penalties})
 
-	// Convert LFP data to format required for CSV
+	// Convert Penalty payment data to format required for CSV
 	var penaltyErrorDataList models.PenaltyErrorDataList
 	for _, p := range penalties.Penalties {
 		keys := reflect.ValueOf(p.Data.Transactions).MapKeys()
@@ -65,7 +65,7 @@ func (s *ServiceImpl) GetLFPCSV(reconciliationMetaData *models.ReconciliationMet
 		penaltyErrorDataList.Penalties = append(penaltyErrorDataList.Penalties, penaltyErrorData)
 	}
 
-	csv = constructCSV(penaltyErrorDataList, lfpFileNamePrefix, reconciliationMetaData)
+	csv = constructCSV(penaltyErrorDataList, ppsFileNamePrefix, reconciliationMetaData)
 
 	return csv, nil
 }

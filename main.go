@@ -20,7 +20,7 @@ func main() {
 	}
 
 	log.Trace("Config", log.Data{"Config": cfg})
-	log.Info("LFP error reporter lambda started")
+	log.Info("Penalty payment error reporter lambda started")
 
 	errorReporterLambda := lambda.New(cfg)
 

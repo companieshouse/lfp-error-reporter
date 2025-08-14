@@ -5,12 +5,13 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/companieshouse/chs.go/log"
-	"github.com/companieshouse/lfp-error-reporter/config"
-	"github.com/companieshouse/lfp-error-reporter/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+
+	"github.com/companieshouse/chs.go/log"
+	"github.com/companieshouse/lfp-error-reporter/config"
+	"github.com/companieshouse/lfp-error-reporter/models"
 )
 
 // Mongo provides a MongoDB implementation of the DAO
@@ -40,8 +41,8 @@ func (m *Mongo) getMongoClient() error {
 	return nil
 }
 
-// GetLFPData fetches lfp data
-func (m *Mongo) GetLFPData(reconciliationMetaData *models.ReconciliationMetaData) (models.PenaltyList, error) {
+// GetPPSData fetches penalty payment data
+func (m *Mongo) GetPPSData(reconciliationMetaData *models.ReconciliationMetaData) (models.PenaltyList, error) {
 	ctx := context.Background()
 	var (
 		penalties       []models.PayableResourceDao
@@ -55,10 +56,10 @@ func (m *Mongo) GetLFPData(reconciliationMetaData *models.ReconciliationMetaData
 		return penaltiesData, fmt.Errorf("error connecting to MongoDB: %s", err)
 	}
 
-	collection := m.Client.Database(m.Config.Database).Collection(m.Config.LFPCollection)
+	collection := m.Client.Database(m.Config.Database).Collection(m.Config.PPSCollection)
 
-	log.Info("GetLFPData: lambda start time: " + lambdaStartTime.String())
-	log.Info("GetLFPData: lambda end time: " + lambdaEndTime.String())
+	log.Info("GetPPSData: lambda start time: " + lambdaStartTime.String())
+	log.Info("GetPPSData: lambda end time: " + lambdaEndTime.String())
 
 	filter := bson.M{"data.created_at": bson.M{
 		"$gt": lambdaStartTime,
@@ -66,10 +67,10 @@ func (m *Mongo) GetLFPData(reconciliationMetaData *models.ReconciliationMetaData
 	}, "e5_command_error": bson.M{"$ne": ""}}
 	cursor, err := collection.Find(ctx, filter)
 	if err != nil {
-		return penaltiesData, fmt.Errorf("error retrieving lfp data: %s", err)
+		return penaltiesData, fmt.Errorf("error retrieving penalty payment data: %s", err)
 	}
 	if err = cursor.All(ctx, &penalties); err != nil {
-		return penaltiesData, fmt.Errorf("error storing lfp data: %s", err)
+		return penaltiesData, fmt.Errorf("error storing penalty payment data: %s", err)
 	}
 	penaltiesData = models.PenaltyList{
 		Penalties: penalties,

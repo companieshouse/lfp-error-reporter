@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// PenaltyList holds an array of lfp penalties
+// PenaltyList holds an array of penalty payment penalties
 type PenaltyList struct {
 	Penalties []PayableResourceDao
 }
@@ -27,7 +27,7 @@ type PayableResourceDao struct {
 	Data           PayableResourceDataDao `bson:"data"`
 }
 
-// PayableResourceDataDao contains data of a lfp penalty
+// PayableResourceDataDao contains data of a penalty payment penalty
 type PayableResourceDataDao struct {
 	Transactions map[string]TransactionDao `bson:"transactions"`
 	Etag         string                    `bson:"etag"`
