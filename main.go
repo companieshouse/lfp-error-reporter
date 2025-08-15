@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	log.Namespace = "lfp-error-reporter"
+	log.Namespace = "penalty-payment-error-reporter"
 
 	cfg, err := config.Get()
 	if err != nil {
