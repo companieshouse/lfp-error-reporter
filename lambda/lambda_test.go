@@ -55,7 +55,7 @@ func TestUnitExecute(t *testing.T) {
 		})
 	})
 
-	Convey("Subject: Failure to construct penalty payment CSV", t, func() {
+	Convey("Subject: Failure to construct penalty payment error CSV", t, func() {
 
 		mockService := service.NewMockService(mockCtrl)
 		mockFileTransfer := filetransfer.NewMockFileTransfer(mockCtrl)
@@ -65,7 +65,7 @@ func TestUnitExecute(t *testing.T) {
 		Convey("Given a failure when constructing a transactions CSV", func() {
 
 			var failingPaymentCSV models.CSV
-			mockService.EXPECT().GetFailingPaymentCSV(&reconciliationMetaData).Return(failingPaymentCSV, errors.New("failed to construct penalty payment CSV")).Times(1)
+			mockService.EXPECT().GetFailingPaymentCSV(&reconciliationMetaData).Return(failingPaymentCSV, errors.New("failed to construct penalty payment error CSV")).Times(1)
 
 			Convey("And no CSV's are uploaded", func() {
 
@@ -87,7 +87,7 @@ func TestUnitExecute(t *testing.T) {
 
 		lambda := createMockLambda(&cfg, mockService, mockFileTransfer)
 
-		Convey("Given a penalty payment CSV is constructed successfully", func() {
+		Convey("Given a penalty payment error CSV is constructed successfully", func() {
 
 			var failingPaymentCSV models.CSV
 			mockService.EXPECT().GetFailingPaymentCSV(&reconciliationMetaData).Return(failingPaymentCSV, nil).Times(1)
