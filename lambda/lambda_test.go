@@ -36,14 +36,14 @@ func TestUnitExecute(t *testing.T) {
 
 		lambda := createMockLambda(&cfg, mockService, mockFileTransfer)
 
-		Convey("Given a lfp CSV is constructed successfully", func() {
+		Convey("Given a penalty payment error CSV is constructed successfully", func() {
 
-			var LFPCSV models.CSV
-			mockService.EXPECT().GetLFPCSV(&reconciliationMetaData).Return(LFPCSV, nil).Times(1)
+			var failingPaymentCSV models.CSV
+			mockService.EXPECT().GetFailingPaymentCSV(&reconciliationMetaData).Return(failingPaymentCSV, nil).Times(1)
 
 			Convey("And the CSV is uploaded successfully", func() {
 
-				csvs := []models.CSV{LFPCSV}
+				csvs := []models.CSV{failingPaymentCSV}
 				mockFileTransfer.EXPECT().UploadCSVFiles(csvs).Return(nil).Times(1)
 
 				Convey("Then the request is successful", func() {
@@ -55,7 +55,7 @@ func TestUnitExecute(t *testing.T) {
 		})
 	})
 
-	Convey("Subject: Failure to construct lfp CSV", t, func() {
+	Convey("Subject: Failure to construct penalty payment error CSV", t, func() {
 
 		mockService := service.NewMockService(mockCtrl)
 		mockFileTransfer := filetransfer.NewMockFileTransfer(mockCtrl)
@@ -64,8 +64,8 @@ func TestUnitExecute(t *testing.T) {
 
 		Convey("Given a failure when constructing a transactions CSV", func() {
 
-			var lfpCSV models.CSV
-			mockService.EXPECT().GetLFPCSV(&reconciliationMetaData).Return(lfpCSV, errors.New("failed to construct lfp CSV")).Times(1)
+			var failingPaymentCSV models.CSV
+			mockService.EXPECT().GetFailingPaymentCSV(&reconciliationMetaData).Return(failingPaymentCSV, errors.New("failed to construct penalty payment error CSV")).Times(1)
 
 			Convey("And no CSV's are uploaded", func() {
 
@@ -87,14 +87,14 @@ func TestUnitExecute(t *testing.T) {
 
 		lambda := createMockLambda(&cfg, mockService, mockFileTransfer)
 
-		Convey("Given a lfp CSV is constructed successfully", func() {
+		Convey("Given a penalty payment error CSV is constructed successfully", func() {
 
-			var lfpCSV models.CSV
-			mockService.EXPECT().GetLFPCSV(&reconciliationMetaData).Return(lfpCSV, nil).Times(1)
+			var failingPaymentCSV models.CSV
+			mockService.EXPECT().GetFailingPaymentCSV(&reconciliationMetaData).Return(failingPaymentCSV, nil).Times(1)
 
 			Convey("But the CSV is not uploaded successfully", func() {
 
-				csvs := []models.CSV{lfpCSV}
+				csvs := []models.CSV{failingPaymentCSV}
 				mockFileTransfer.EXPECT().UploadCSVFiles(csvs).Return(errors.New("failure to upload CSV")).Times(1)
 
 				Convey("Then the request is unsuccessful", func() {

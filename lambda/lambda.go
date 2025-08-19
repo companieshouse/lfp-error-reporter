@@ -52,18 +52,18 @@ func (lambda *Lambda) Execute(reconciliationMetaData *models.ReconciliationMetaD
 		reconciliationMetaData.EndTime = startTime.Add(24 * time.Hour)
 	}
 
-	log.Info("LFP error reporting lambda executing. Getting penalties with e5 errors for date: " + reconciliationMetaData.ReconciliationDate + ". Creating lfp CSV.")
+	log.Info("Penalty payment error reporting lambda executing. Getting penalties with e5 errors for date: " + reconciliationMetaData.ReconciliationDate + ". Creating penalty payment error CSV.")
 
-	lfpCSV, err := lambda.Service.GetLFPCSV(reconciliationMetaData)
+	failingPaymentsCSV, err := lambda.Service.GetFailingPaymentCSV(reconciliationMetaData)
 	if err != nil {
 		log.Error(err)
 		return err
 	}
 
-	log.Info("LFP CSV constructed.")
-	log.Trace("LFP CSV", log.Data{"lfp_csv": lfpCSV})
+	log.Info("Penalty payment error CSV constructed.")
+	log.Trace("Penalty payment error CSV", log.Data{"failing_payment_csv": failingPaymentsCSV})
 
-	err = lambda.FileTransfer.UploadCSVFiles([]models.CSV{lfpCSV})
+	err = lambda.FileTransfer.UploadCSVFiles([]models.CSV{failingPaymentsCSV})
 	if err != nil {
 		log.Error(err)
 		return err

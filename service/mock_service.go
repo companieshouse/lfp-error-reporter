@@ -34,17 +34,17 @@ func (m *MockService) EXPECT() *MockServiceMockRecorder {
 	return m.recorder
 }
 
-// GetLFPCSV mocks base method
-func (m *MockService) GetLFPCSV(reconciliationMetaData *models.ReconciliationMetaData) (models.CSV, error) {
+// GetFailingPaymentCSV mocks base method
+func (m *MockService) GetFailingPaymentCSV(reconciliationMetaData *models.ReconciliationMetaData) (models.CSV, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetLFPCSV", reconciliationMetaData)
+	ret := m.ctrl.Call(m, "GetFailingPaymentCSV", reconciliationMetaData)
 	ret0, _ := ret[0].(models.CSV)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetLFPCSV indicates an expected call of GetLFPCSV
-func (mr *MockServiceMockRecorder) GetLFPCSV(reconciliationMetaData interface{}) *gomock.Call {
+// GetFailingPaymentCSV indicates an expected call of GetFailingPaymentCSV
+func (mr *MockServiceMockRecorder) GetFailingPaymentCSV(reconciliationMetaData interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLFPCSV", reflect.TypeOf((*MockService)(nil).GetLFPCSV), reconciliationMetaData)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetFailingPaymentCSV", reflect.TypeOf((*MockService)(nil).GetFailingPaymentCSV), reconciliationMetaData)
 }

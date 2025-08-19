@@ -11,7 +11,7 @@ import (
 
 func main() {
 
-	log.Namespace = "lfp-error-reporter"
+	log.Namespace = "penalty-payment-error-reporter"
 
 	cfg, err := config.Get()
 	if err != nil {
@@ -20,7 +20,7 @@ func main() {
 	}
 
 	log.Trace("Config", log.Data{"Config": cfg})
-	log.Info("LFP error reporter lambda started")
+	log.Info("Penalty payment error reporter lambda started")
 
 	errorReporterLambda := lambda.New(cfg)
 

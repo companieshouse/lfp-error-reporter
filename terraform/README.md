@@ -1,4 +1,4 @@
-# LFP error reporter - terraform
+# Penalty payment error reporter - terraform
 
 ## Introduction
 This provisions the lfp-error-reporter Lambda function which is triggered by the cloud watch event.

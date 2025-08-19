@@ -4,38 +4,39 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/companieshouse/lfp-error-reporter/config"
 	"regexp"
 	"testing"
+
+	"github.com/companieshouse/lfp-error-reporter/config"
 
 	. "github.com/smartystreets/goconvey/convey"
 )
 
 // key constants
 const (
-	LFPCOLLECTIONKEYCONST = `MONGODB_LFP_ERR_REP_TRANSACTIONS_COLLECTION`
-	DATABASEKEYCONST      = `MONGODB_LFP_ERR_REP_DATABASE`
-	MONGODBURLKEYCONST    = `MONGODB_URL`
-	SFTPSERVERKEYCONST    = `SFTP_SERVER`
-	SFTPPORTKEYCONST      = `SFTP_PORT`
-	SFTPUSERNAMEKEYCONST  = `SFTP_USERNAME`
-	SFTPPASSWORDKEYCONST  = `SFTP_PASSWORD`
-	SFTPFILEPATHKEYCONST  = `SFTP_FILE_PATH`
+	PENALTYPAYMENTCOLLECTIONKEYCONST = `PPS_MONGODB_PAYABLE_RESOURCES_COLLECTION`
+	DATABASEKEYCONST                 = `PPS_MONGODB_DATABASE`
+	MONGODBURLKEYCONST               = `MONGODB_URL`
+	SFTPSERVERKEYCONST               = `SFTP_SERVER`
+	SFTPPORTKEYCONST                 = `SFTP_PORT`
+	SFTPUSERNAMEKEYCONST             = `SFTP_USERNAME`
+	SFTPPASSWORDKEYCONST             = `SFTP_PASSWORD`
+	SFTPFILEPATHKEYCONST             = `SFTP_FILE_PATH`
 )
 
 // value constants
 const (
-	LfpCollectionConst = `lpf-collection`
-	databaseConst      = `oriel-db`
-	mongoDbUrlConst    = `localhost:12344`
-	sftpServerConst    = `sftp-server`
-	sftpPortConst      = `sftp-port`
-	sftpUserNameConst  = `sftp-username`
-	sftpPasswordConst  = `sftp-password`
-	sftpFilePathConst  = `sftp-file-path`
-	nameConst          = `chs-log-test`
-	namespaceConst     = `chs-namespace-test`
-	configConst        = `config`
+	penaltyPaymentCollectionConst = `pps-collection`
+	databaseConst                 = `oriel-db`
+	mongoDbUrlConst               = `localhost:12344`
+	sftpServerConst               = `sftp-server`
+	sftpPortConst                 = `sftp-port`
+	sftpUserNameConst             = `sftp-username`
+	sftpPasswordConst             = `sftp-password`
+	sftpFilePathConst             = `sftp-file-path`
+	nameConst                     = `chs-log-test`
+	namespaceConst                = `chs-namespace-test`
+	configConst                   = `config`
 )
 
 func TestConfig(t *testing.T) {
@@ -45,24 +46,24 @@ func TestConfig(t *testing.T) {
 		err           error
 		configuration *config.Config
 		envVars       = map[string]string{
-			LFPCOLLECTIONKEYCONST: LfpCollectionConst,
-			DATABASEKEYCONST:      databaseConst,
-			MONGODBURLKEYCONST:    mongoDbUrlConst,
-			SFTPSERVERKEYCONST:    sftpServerConst,
-			SFTPPORTKEYCONST:      sftpPortConst,
-			SFTPUSERNAMEKEYCONST:  sftpUserNameConst,
-			SFTPPASSWORDKEYCONST:  sftpPasswordConst,
-			SFTPFILEPATHKEYCONST:  sftpFilePathConst,
+			PENALTYPAYMENTCOLLECTIONKEYCONST: penaltyPaymentCollectionConst,
+			DATABASEKEYCONST:                 databaseConst,
+			MONGODBURLKEYCONST:               mongoDbUrlConst,
+			SFTPSERVERKEYCONST:               sftpServerConst,
+			SFTPPORTKEYCONST:                 sftpPortConst,
+			SFTPUSERNAMEKEYCONST:             sftpUserNameConst,
+			SFTPPASSWORDKEYCONST:             sftpPasswordConst,
+			SFTPFILEPATHKEYCONST:             sftpFilePathConst,
 		}
 		builtConfig = config.Config{
-			LFPCollection: LfpCollectionConst,
-			Database:      databaseConst,
-			MongoDBURL:    mongoDbUrlConst,
-			SFTPServer:    sftpServerConst,
-			SFTPPort:      sftpPortConst,
-			SFTPUserName:  sftpUserNameConst,
-			SFTPPassword:  sftpPasswordConst,
-			SFTPFilePath:  sftpFilePathConst,
+			PayableResourcesCollection: penaltyPaymentCollectionConst,
+			Database:                   databaseConst,
+			MongoDBURL:                 mongoDbUrlConst,
+			SFTPServer:                 sftpServerConst,
+			SFTPPort:                   sftpPortConst,
+			SFTPUserName:               sftpUserNameConst,
+			SFTPPassword:               sftpPasswordConst,
+			SFTPFilePath:               sftpFilePathConst,
 		}
 		sftpUserNameRegex = regexp.MustCompile(sftpUserNameConst)
 		sftpPasswordRegex = regexp.MustCompile(sftpPasswordConst)
@@ -94,7 +95,7 @@ func TestConfig(t *testing.T) {
 
 			Convey("The generated JSON string from configuration should not contain sensitive data", func() {
 				jsonByte, err := json.Marshal(builtConfig)
-				
+
 				So(err, ShouldBeNil)
 				So(sftpUserNameRegex.Match(jsonByte), ShouldEqual, false)
 				So(sftpPasswordRegex.Match(jsonByte), ShouldEqual, false)

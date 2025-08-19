@@ -1,6 +1,6 @@
 resource "aws_cloudwatch_event_rule" "lfp_error_reporter" {
   name                = "${var.service}-${var.environment}"
-  description         = "Call lfp error reporter lambda"
+  description         = "Call penalty payment error reporter lambda"
   schedule_expression = var.cron_schedule
 }
 
