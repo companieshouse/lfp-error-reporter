@@ -16,6 +16,7 @@ type TransactionDao struct {
 	Amount     float64 `bson:"amount"`
 	Type       string  `bson:"type"`
 	MadeUpDate string  `bson:"made_up_date"`
+	Reason     string  `bson:"reason"`
 }
 
 // PayableResourceDao is the persisted resource for payable items
@@ -67,11 +68,13 @@ type PenaltyErrorDataList struct {
 
 // PenaltyErrorData is the formatted data required in the CSV
 type PenaltyErrorData struct {
-	TransactionDate *time.Time
-	PUON            string
-	CompanyNumber   string
-	MadeUpDate      string
-	Value           float64
+	CreatedAt    *time.Time
+	PayableRef   string
+	CustomerCode string
+	PenaltyRef   string
+	MadeUpDate   string
+	Amount       float64
+	Reason       string
 }
 
 // ToCSV converts PenaltyErrorDataList into CSV-writable data
