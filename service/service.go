@@ -55,12 +55,16 @@ func (s *ServiceImpl) GetFailingPaymentCSV(reconciliationMetaData *models.Reconc
 	var penaltyErrorDataList models.PenaltyErrorDataList
 	for _, p := range penalties.Penalties {
 		keys := reflect.ValueOf(p.Data.Transactions).MapKeys()
+		penaltyRef := keys[0].String()
+		transaction := p.Data.Transactions[penaltyRef]
 		penaltyErrorData := models.PenaltyErrorData{
-			TransactionDate: p.Data.CreatedAt,
-			PUON:            p.PayableRef,
-			CompanyNumber:   p.CustomerCode,
-			MadeUpDate:      p.Data.Transactions[keys[0].String()].MadeUpDate,
-			Value:           p.Data.Transactions[keys[0].String()].Amount,
+			CreatedAt:    p.Data.CreatedAt,
+			PayableRef:   p.PayableRef,
+			CustomerCode: p.CustomerCode,
+			PenaltyRef:   penaltyRef,
+			MadeUpDate:   transaction.MadeUpDate,
+			Amount:       transaction.Amount,
+			Reason:       transaction.Reason,
 		}
 		penaltyErrorDataList.Penalties = append(penaltyErrorDataList.Penalties, penaltyErrorData)
 	}
