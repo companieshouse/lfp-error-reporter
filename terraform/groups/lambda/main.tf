@@ -8,15 +8,6 @@ terraform {
   }
 }
 
-provider "vault" {
-  auth_login {
-    path = "auth/userpass/login/${var.vault_username}"
-    parameters = {
-      password = var.vault_password
-    }
-  }
-}
-
 data "terraform_remote_state" "network_remote_state" {
   backend = "s3"
   config = {
