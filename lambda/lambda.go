@@ -1,8 +1,6 @@
 // Package lambda contains the core lambda executable code
 package lambda
 
-// temporary line to bump source-code in pipeline
-
 import (
 	"time"
 
