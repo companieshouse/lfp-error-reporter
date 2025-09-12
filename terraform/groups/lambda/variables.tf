@@ -1,6 +1,7 @@
 variable "aws_region" {
   type        = string
   description = "AWS Region"
+  default     = "eu-west-2"
 }
 
 variable "aws_profile" {
@@ -26,9 +27,9 @@ variable "release_bucket_name" {
   description = "The S3 release bucket location containing the function code. "
 }
 
-variable "release_version" {
+variable "release_artifact_key" {
   type        = string
-  description = "The version of the function code."
+  description = "The release artifact key for the Lambda function"
 }
 
 variable "runtime" {
@@ -65,13 +66,25 @@ variable open_lambda_environment_variables {
   default     = {}
 }
 
-# Network Remote State
-variable "remote_state_bucket" {
+variable "vpc_name" {
   type        = string
-  description = "Remote state location for the network to deploy the Lambda to."
+  description = "The VPC in which to create resources"
+  default     = "Test & Development"
 }
 
-variable "remote_state_key" {
+variable "lambda_logs_retention_days" {
+  type        = number
+  description = "The number of days to retain Lambda logs in CloudWatch"
+  default     = 7
+}
+
+variable "application_subnet_pattern_key" {
   type        = string
-  description = "Remote state location for the network to deploy the Lambda to."
+  description = "The vault key for the application subnet pattern"
+}
+
+variable "lambda_runtime" {
+  type        = string
+  description = "The lambda runtime to run the application"
+  default     = "go1.x"
 }
