@@ -78,11 +78,6 @@ variable "lambda_logs_retention_days" {
   default     = 7
 }
 
-variable "application_subnet_pattern_key" {
-  type        = string
-  description = "The vault key for the application subnet pattern"
-}
-
 variable "lambda_runtime" {
   type        = string
   description = "The lambda runtime to run the application"

@@ -25,35 +25,37 @@ data "aws_iam_policy_document" "lfp_error_reporter_execution" {
   statement {
     effect = "Allow"
 
+    # todo - commenting out permissions to leave only the lambda module permissions
+    #        to test what breaks and what permissions to add back in
     actions = [
-      "s3:PutAccountPublicAccessBlock",
-      "s3:GetAccountPublicAccessBlock",
-      "s3:ListAllMyBuckets",
-      "s3:HeadBucket",
-      "s3:GetObject",
-      "ec2:CreateNetworkInterface",
-      "ec2:DescribeNetworkInterfaces",
-      "ec2:DeleteNetworkInterface", # todo - delete network interfaces ???
-      "logs:DescribeQueries",       # todo - do we even need all these logs: ...
-      "logs:GetLogRecord",          #        the new module has its own log policy,
-      "logs:PutDestinationPolicy",  #        but with much less permissions than this though ?
-      "logs:StopQuery",
-      "logs:TestMetricFilter",
-      "logs:DeleteDestination",
-      "logs:CreateLogGroup",        # todo - the new lambda module creates its own logging policy...
-      "logs:GetLogDelivery",
-      "logs:ListLogDeliveries",
-      "logs:CreateLogDelivery",
-      "logs:DeleteResourcePolicy",
-      "logs:PutResourcePolicy",
-      "logs:DescribeExportTasks",
-      "logs:GetQueryResults",
-      "logs:UpdateLogDelivery",
-      "logs:CancelExportTask",
-      "logs:DeleteLogDelivery",
-      "logs:PutDestination",
-      "logs:DescribeResourcePolicies",
-      "logs:DescribeDestinations"
+#       "s3:PutAccountPublicAccessBlock",
+#       "s3:GetAccountPublicAccessBlock",
+#       "s3:ListAllMyBuckets",
+#       "s3:HeadBucket",
+#       "s3:GetObject",
+#       "ec2:CreateNetworkInterface",
+#       "ec2:DescribeNetworkInterfaces",
+#       "ec2:DeleteNetworkInterface",
+#       "logs:DescribeQueries",
+#       "logs:GetLogRecord",
+#       "logs:PutDestinationPolicy",
+#       "logs:StopQuery",
+#       "logs:TestMetricFilter",
+#       "logs:DeleteDestination",
+#       "logs:CreateLogGroup",
+#       "logs:GetLogDelivery",
+#       "logs:ListLogDeliveries",
+#       "logs:CreateLogDelivery",
+#       "logs:DeleteResourcePolicy",
+#       "logs:PutResourcePolicy",
+#       "logs:DescribeExportTasks",
+#       "logs:GetQueryResults",
+#       "logs:UpdateLogDelivery",
+#       "logs:CancelExportTask",
+#       "logs:DeleteLogDelivery",
+#       "logs:PutDestination",
+#       "logs:DescribeResourcePolicies",
+#       "logs:DescribeDestinations"
     ]
 
     resources = [

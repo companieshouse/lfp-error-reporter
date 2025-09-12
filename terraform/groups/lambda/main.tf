@@ -1,4 +1,4 @@
-module "lambda_new" {
+module "lambda" {
   source = "git@github.com:companieshouse/terraform-modules.git//aws/lambda?ref=1.0.342"
 
   environment           = var.environment
@@ -13,11 +13,13 @@ module "lambda_new" {
   lambda_timeout_seconds     = var.timeout_seconds
   lambda_logs_retention_days = var.lambda_logs_retention_days
 
+  lambda_env_vars = local.lambda_env_vars
+
   lambda_cloudwatch_event_rules = [
     {
       name                = "lfp-error-reporter-cidev"
       description         = "Call penalty payment error reporter lambda"
-      schedule_expression = "cron(0/30 * ? * * *)"
+      schedule_expression = var.cron_schedule
     }
   ]
 
@@ -38,30 +40,30 @@ module "lambda_new" {
 
 moved {
   from = module.lambda.aws_lambda_function.lfp_error_reporter
-  to   = module.lambda_new.aws_lambda_function.lambda
+  to   = module.lambda.aws_lambda_function.lambda
 }
 
 moved {
   from = module.security-group.aws_security_group.lfp_error_reporter
-  to   = module.lambda_new.aws_security_group.lambda_sg
+  to   = module.lambda.aws_security_group.lambda_sg
 }
 
 moved {
   from = module.lambda-roles.aws_iam_role.lfp_error_reporter_execution
-  to   = module.lambda_new.aws_iam_role.lambda_execution
+  to   = module.lambda.aws_iam_role.lambda_execution
 }
 
 moved {
   from = module.cloud-watch.aws_cloudwatch_event_rule.lfp_error_reporter
-  to   = module.lambda_new.aws_cloudwatch_event_rule.lambda_cloudwatch_event_rules["lfp-error-reporter-cidev"]
+  to   = module.lambda.aws_cloudwatch_event_rule.lambda_cloudwatch_event_rules["lfp-error-reporter-cidev"]
 }
 
 moved {
   from = module.cloud-watch.aws_cloudwatch_event_target.call_lfp_error_reporter_lambda
-  to   = module.lambda_new.aws_cloudwatch_event_target.lambda_target["lfp-error-reporter-cidev"]
+  to   = module.lambda.aws_cloudwatch_event_target.lambda_target["lfp-error-reporter-cidev"]
 }
 
 moved {
   from = module.cloud-watch.aws_lambda_permission.allow_cloudwatch_to_call_lfp_error_reporter
-  to   = module.lambda_new.aws_lambda_permission.allow_cloudwatch_to_call_lambda["lfp-error-reporter-cidev"]
+  to   = module.lambda.aws_lambda_permission.allow_cloudwatch_to_call_lambda["lfp-error-reporter-cidev"]
 }
