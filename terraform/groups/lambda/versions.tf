@@ -13,7 +13,7 @@ terraform {
   }
 
   backend "s3" {
-    encrypt = true        # todo - why encrypted ? - this doesn't appear in other repo terraform files
+    encrypt = true
   }
 }
 
