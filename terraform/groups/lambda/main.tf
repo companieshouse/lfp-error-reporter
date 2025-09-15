@@ -55,15 +55,15 @@ moved {
 
 moved {
   from = module.cloud-watch.aws_cloudwatch_event_rule.lfp_error_reporter
-  to   = module.lambda.aws_cloudwatch_event_rule.lambda_cloudwatch_event_rules["lfp-error-reporter-cidev"]
+  to   = module.lambda.aws_cloudwatch_event_rule.lambda_cloudwatch_event_rules["lfp-error-reporter-${var.environment}"]
 }
 
 moved {
   from = module.cloud-watch.aws_cloudwatch_event_target.call_lfp_error_reporter_lambda
-  to   = module.lambda.aws_cloudwatch_event_target.lambda_target["lfp-error-reporter-cidev"]
+  to   = module.lambda.aws_cloudwatch_event_target.lambda_target["lfp-error-reporter-${var.environment}"]
 }
 
 moved {
   from = module.cloud-watch.aws_lambda_permission.allow_cloudwatch_to_call_lfp_error_reporter
-  to   = module.lambda.aws_lambda_permission.allow_cloudwatch_to_call_lambda["lfp-error-reporter-cidev"]
+  to   = module.lambda.aws_lambda_permission.allow_cloudwatch_to_call_lambda["lfp-error-reporter-${var.environment}"]
 }
