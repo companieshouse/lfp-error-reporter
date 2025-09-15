@@ -17,7 +17,7 @@ module "lambda" {
 
   lambda_cloudwatch_event_rules = [
     {
-      name                = "lfp-error-reporter-cidev"
+      name                = "lfp-error-reporter-${var.environment}"
       description         = "Call penalty payment error reporter lambda"
       schedule_expression = var.cron_schedule
     }
