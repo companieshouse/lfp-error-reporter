@@ -23,7 +23,7 @@ module "lambda" {
     }
   ]
 
-  additional_policies = local.additional_iam_policies_json
+#  additional_policies = local.additional_iam_policies_json
 
   lambda_sg_egress_rule = {
     from_port   = 0

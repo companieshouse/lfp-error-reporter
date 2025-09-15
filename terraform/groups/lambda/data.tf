@@ -21,13 +21,13 @@ data "aws_subnets" "application" {
   }
 }
 
-data "aws_iam_policy_document" "lfp_error_reporter_execution" {
-  statement {
-    effect = "Allow"
-
-    # todo - commenting out permissions to leave only the lambda module permissions
-    #        to test what breaks and what permissions to add back in
-    actions = [
+# todo - i don't think this policy is required any longer. commenting out with
+#        a view to reintroducing permissions or deleting after testing in cidev
+# data "aws_iam_policy_document" "lfp_error_reporter_execution" {
+#   statement {
+#     effect = "Allow"
+#
+#     actions = [
 #       "s3:PutAccountPublicAccessBlock",
 #       "s3:GetAccountPublicAccessBlock",
 #       "s3:ListAllMyBuckets",
@@ -56,24 +56,24 @@ data "aws_iam_policy_document" "lfp_error_reporter_execution" {
 #       "logs:PutDestination",
 #       "logs:DescribeResourcePolicies",
 #       "logs:DescribeDestinations"
-    ]
-
-    resources = [
-      "*"
-    ]
-  }
-
-  statement {
-    effect = "Allow"
-
-    actions = [
-      "s3:*",
-      "logs:*"
-    ]
-
-    resources = [
-      "arn:aws:logs:::log-group:/aws/lambda/${var.service}",
-      "arn:aws:logs:*:*:log-group:*:*:*",
-    ]
-  }
-}
+#     ]
+#
+#     resources = [
+#       "*"
+#     ]
+#   }
+#
+#   statement {
+#     effect = "Allow"
+#
+#     actions = [
+#       "s3:*",
+#       "logs:*"
+#     ]
+#
+#     resources = [
+#       "arn:aws:logs:::log-group:/aws/lambda/${var.service}",
+#       "arn:aws:logs:*:*:log-group:*:*:*",
+#     ]
+#   }
+# }
