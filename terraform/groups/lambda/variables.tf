@@ -32,12 +32,6 @@ variable "release_artifact_key" {
   description = "The release artifact key for the Lambda function"
 }
 
-variable "runtime" {
-  type        = string
-  default     = "go1.x"
-  description = "The Lambda function language / runtime."
-}
-
 variable "timeout_seconds" {
   type        = string
   default     = "6"
