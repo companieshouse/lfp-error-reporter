@@ -1,5 +1,9 @@
-data "vault_generic_secret" "configuration" {
-  path = "applications/${var.aws_profile}/${var.environment}/${var.service}/lambda_environment_variables"
+data "vault_generic_secret" "stack_secrets" {
+  path = "applications/${var.aws_profile}/${var.environment}/${local.stack_name}-stack"
+}
+
+data "vault_generic_secret" "service_secrets" {
+  path = "applications/${var.aws_profile}/${var.environment}/${local.stack_name}-stack/${var.service}"
 }
 
 data "aws_vpc" "vpc" {
