@@ -60,12 +60,6 @@ variable open_lambda_environment_variables {
   default     = {}
 }
 
-variable "vpc_name" {
-  type        = string
-  description = "The VPC in which to create resources"
-  default     = "Test & Development"
-}
-
 variable "lambda_logs_retention_days" {
   type        = number
   description = "The number of days to retain Lambda logs in CloudWatch"
