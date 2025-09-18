@@ -35,35 +35,3 @@ module "lambda" {
   lambda_vpc_access_subnet_ids = local.lambda_vpc_access_subnet_ids
   lambda_vpc_id                = data.aws_vpc.vpc.id
 }
-
-# temporary move blocks
-
-moved {
-  from = module.lambda.aws_lambda_function.lfp_error_reporter
-  to   = module.lambda.aws_lambda_function.lambda
-}
-
-moved {
-  from = module.security-group.aws_security_group.lfp_error_reporter
-  to   = module.lambda.aws_security_group.lambda_sg
-}
-
-moved {
-  from = module.lambda-roles.aws_iam_role.lfp_error_reporter_execution
-  to   = module.lambda.aws_iam_role.lambda_execution
-}
-
-moved {
-  from = module.cloud-watch.aws_cloudwatch_event_rule.lfp_error_reporter
-  to   = module.lambda.aws_cloudwatch_event_rule.lambda_cloudwatch_event_rules["lfp-error-reporter-cidev"]
-}
-
-moved {
-  from = module.cloud-watch.aws_cloudwatch_event_target.call_lfp_error_reporter_lambda
-  to   = module.lambda.aws_cloudwatch_event_target.lambda_target["lfp-error-reporter-cidev"]
-}
-
-moved {
-  from = module.cloud-watch.aws_lambda_permission.allow_cloudwatch_to_call_lfp_error_reporter
-  to   = module.lambda.aws_lambda_permission.allow_cloudwatch_to_call_lambda["lfp-error-reporter-cidev"]
-}
