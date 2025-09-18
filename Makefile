@@ -45,8 +45,9 @@ endif
 	$(info Packaging version: $(version))
 	$(eval tmpdir:=$(shell mktemp -d build-XXXXXXXXXX))
 	cp ./$(bin) $(tmpdir)
+	cp ./bootstrap $(tmpdir)
 	cp -r ./terraform  $(tmpdir)/terraform
-	cd $(tmpdir) && zip -r ../$(bin)-$(version).zip $(bin) terraform
+	cd $(tmpdir) && zip -r ../$(bin)-$(version).zip $(bin) bootstrap terraform
 	rm -rf $(tmpdir)
 
 .PHONY: dist
