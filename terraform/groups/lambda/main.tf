@@ -26,8 +26,8 @@ module "lambda" {
 #  additional_policies = local.additional_iam_policies_json
 
   lambda_sg_egress_rule = {
-    from_port   = 0
-    to_port     = 0
+    from_port   = -1
+    to_port     = -1
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }

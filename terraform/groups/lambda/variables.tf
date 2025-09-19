@@ -11,7 +11,7 @@ variable "aws_profile" {
 
 variable "handler" {
   type        = string
-  default     = "lfp-error-reporter"
+  default     = "bootstrap"
   description = "The entrypoint in the Lambda funtion."
 }
 
@@ -69,5 +69,5 @@ variable "lambda_logs_retention_days" {
 variable "lambda_runtime" {
   type        = string
   description = "The lambda runtime to run the application"
-  default     = "go1.x"
+  default     = "provided.al2023"
 }
